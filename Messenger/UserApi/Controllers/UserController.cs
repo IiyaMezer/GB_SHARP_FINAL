@@ -3,13 +3,15 @@ using Microsoft.AspNetCore.Mvc;
 using SEM4_Swagger.Abstraction;
 using SEM4_Swagger.Services;
 
+
+
 namespace SEM4_Swagger.Controllers
 {
     [ApiController]
     [Route("[controller]")]
     public class UserController: ControllerBase
     {
-         private readonly IUserService _userService;
+         private readonly UserService _userService;
 
         public UserController(IUserService userService)
         {
