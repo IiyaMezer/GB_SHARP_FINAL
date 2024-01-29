@@ -28,7 +28,7 @@ namespace SEM4_Swagger.Services
                 UserEntity entity = null;
                 if (userExist != null) 
                 {
-                    return false;
+                    return default;
 
                 }
                 else
