@@ -23,10 +23,10 @@ namespace SEM4_Swagger.Services
             
             using (_context)
             {
-               var userExist = _context.Users.Where(x=> !x.UserName.ToLower().Equals(name.ToLower()));
+               var userExist = _context.Users.Any(x=> !x.UserName.ToLower().Equals(name.ToLower()));
                 users = _context.Users.ToList();
                 UserEntity entity = null;
-                if (userExist != null) 
+                if (userExist) 
                 {
                     return default;
 
@@ -40,6 +40,9 @@ namespace SEM4_Swagger.Services
                         Password = password,
                         RoleType = roleId
                     };
+
+                    _context.Add(entity);
+                    _context.SaveChanges();
                     return entity.Id;
                 }
 
