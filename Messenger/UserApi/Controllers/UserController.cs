@@ -1,21 +1,23 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using SEM4_Swagger.Abstraction;
-using SEM4_Swagger.Services;
+using Microsoft.IdentityModel.Tokens;
+using UserApi.Services;
+using WebApiLib.Abstraction;
 
 
 
-namespace SEM4_Swagger.Controllers
+
+namespace UserApi.Controllers
 {
     [ApiController]
     [Route("[controller]")]
-    public class UserController: ControllerBase
+    public class UserController : ControllerBase
     {
-         private readonly UserService _userService;
+        private readonly UserService _userService;
 
         public UserController(IUserService userService)
         {
-            _userService = userService;
+            _userService = (UserService?)userService;
         }
 
         [AllowAnonymous]

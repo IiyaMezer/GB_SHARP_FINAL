@@ -1,6 +1,6 @@
-﻿using SEM4_Swagger.DataStore.Entity;
+﻿
 
-namespace SEM4_Swagger.Abstraction
+namespace WebApiLib.Abstraction
 {
     public interface IUserService
     {

@@ -1,11 +1,11 @@
 ﻿using Microsoft.IdentityModel.Tokens;
-using SEM4_Swagger.Abstraction;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
+using WebApiLib.Abstraction;
 using WebApiLib.DataStore.Entity;
 
-namespace SEM4_Swagger.Services
+namespace UserApi.Services
 {
     public class UserService : IUserService
     {
@@ -20,21 +20,21 @@ namespace SEM4_Swagger.Services
         public Guid UserAdd(string name, string password)
         {
             var users = new List<UserEntity>();
-            
+
             using (_context)
             {
-               var isFirstUser = !_context.Users.Any();
-               var userExist = _context.Users.Any(x=> !x.UserName.ToLower().Equals(name.ToLower()));
+                var isFirstUser = !_context.Users.Any();
+                var userExist = _context.Users.Any(x => !x.UserName.ToLower().Equals(name.ToLower()));
                 users = _context.Users.ToList();
                 UserEntity entity = null;
-                if (userExist) 
+                if (userExist)
                 {
                     return default;
 
                 }
                 else
                 {
-                    UserRole role = isFirstUser ? UserRole.Admin : UserRole.User; 
+                    UserRole role = isFirstUser ? UserRole.Admin : UserRole.User;
                     entity = new UserEntity
                     {
                         Id = Guid.NewGuid(),
