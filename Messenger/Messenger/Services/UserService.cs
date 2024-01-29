@@ -17,12 +17,13 @@ namespace SEM4_Swagger.Services
             _context = context;
         }
 
-        public Guid UserAdd(string name, string password, UserRole roleId)
+        public Guid UserAdd(string name, string password)
         {
             var users = new List<UserEntity>();
             
             using (_context)
             {
+               var isFirstUser = !_context.Users.Any();
                var userExist = _context.Users.Any(x=> !x.UserName.ToLower().Equals(name.ToLower()));
                 users = _context.Users.ToList();
                 UserEntity entity = null;
@@ -33,12 +34,13 @@ namespace SEM4_Swagger.Services
                 }
                 else
                 {
+                    UserRole role = isFirstUser ? UserRole.Admin : UserRole.User; 
                     entity = new UserEntity
                     {
                         Id = Guid.NewGuid(),
                         UserName = name,
                         Password = password,
-                        RoleType = roleId
+                        RoleType = role
                     };
 
                     _context.Add(entity);
