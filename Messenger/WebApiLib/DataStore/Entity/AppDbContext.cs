@@ -1,8 +1,8 @@
 ﻿using Microsoft.EntityFrameworkCore;
 
-namespace SEM4_Swagger.DataStore.Entity
+namespace WebApiLib.DataStore.Entity
 {
-    public class AppDbContext: DbContext
+    public class AppDbContext : DbContext
     {
         private static string _connectionstring;
         public AppDbContext()
@@ -13,7 +13,7 @@ namespace SEM4_Swagger.DataStore.Entity
         {
             _connectionstring = connectionstring;
         }
-        
+
         public DbSet<UserEntity> Users { get; set; }
         public DbSet<Role> Roles { get; set; }
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)

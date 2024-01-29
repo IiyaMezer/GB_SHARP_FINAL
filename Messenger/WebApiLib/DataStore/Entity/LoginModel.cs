@@ -3,12 +3,12 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace SEM4_Swagger.DataStore.Entity
+namespace WebApiLib.DataStore.Entity
 {
     public class LoginModel
     {
-        public string Name {get; set;}
-        public string Password {get; set;}
+        public string Name { get; set; }
+        public string Password { get; set; }
 
     }
 }

@@ -1,9 +1,9 @@
 ﻿using Microsoft.IdentityModel.Tokens;
 using SEM4_Swagger.Abstraction;
-using SEM4_Swagger.DataStore.Entity;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
+using WebApiLib.DataStore.Entity;
 
 namespace SEM4_Swagger.Services
 {

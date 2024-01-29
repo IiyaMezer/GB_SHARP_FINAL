@@ -1,4 +1,4 @@
-namespace SEM4_Swagger.DataStore.Entity
+namespace WebApiLib.DataStore.Entity
 {
     public enum UserRole
     {
