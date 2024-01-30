@@ -24,39 +24,31 @@ public class UserService : IUserService
         _mapper = mapper;
     }
 
-    public Guid UserAdd(LoginModel model)
+    public UserResponce UserAdd(LoginModel model)
     {
         var users = new List<UserEntity>();
-
+        var responce = UserResponce.OK();
         using (var context = _context())
         {
-            var isFirstUser = !context.Users.Any();
+            
             var userExist = context.Users.Any(x => !x.UserName.ToLower().Equals(model.Name.ToLower()));
-            users = context.Users.ToList();
-            UserEntity entity = null;
+            users = context.Users.ToList();            
             if (userExist)
             {
-                return default;
+                return UserResponce.UserExist(); ;
 
             }
             else
             {
-                if (isFirstUser)
-                {
-                    AddAdmin(model);
-                }
-               
-                entity = new UserEntity
-                {
-                    Id = Guid.NewGuid(),
-                    UserName = model.Name,
-                    Password = model.Password,
-                    RoleType = new RoleEntity { Role = UserRole.User}
-                };
+
+
+                var entity = _mapper.Map<UserEntity>(model);
+                entity.RoleType = new RoleEntity { Role = UserRole.User };
 
                 context.Add(entity);
                 context.SaveChanges();
-                return entity.Id;
+                responce.UserId = entity.Id;
+                return responce;
             }
         }
     }
