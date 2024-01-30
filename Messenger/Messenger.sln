@@ -18,6 +18,12 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WebApiLib", "WebApiLib\WebA
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "KeyGen", "KeyGen\KeyGen.csproj", "{FC4CC07C-5DC4-42A2-9F94-EC14EB4F32A7}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ApiTests", "ApiTests\ApiTests.csproj", "{832FD828-B8E6-4012-BCDE-2E1DFBA9DB5F}"
+	ProjectSection(ProjectDependencies) = postProject
+		{8F2510AD-3B28-41A5-8036-0B050FFD519E} = {8F2510AD-3B28-41A5-8036-0B050FFD519E}
+		{9EB5FBE1-9262-404D-80B2-A1AD68312F5E} = {9EB5FBE1-9262-404D-80B2-A1AD68312F5E}
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -40,6 +46,10 @@ Global
 		{FC4CC07C-5DC4-42A2-9F94-EC14EB4F32A7}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{FC4CC07C-5DC4-42A2-9F94-EC14EB4F32A7}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{FC4CC07C-5DC4-42A2-9F94-EC14EB4F32A7}.Release|Any CPU.Build.0 = Release|Any CPU
+		{832FD828-B8E6-4012-BCDE-2E1DFBA9DB5F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{832FD828-B8E6-4012-BCDE-2E1DFBA9DB5F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{832FD828-B8E6-4012-BCDE-2E1DFBA9DB5F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{832FD828-B8E6-4012-BCDE-2E1DFBA9DB5F}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
