@@ -1,9 +1,15 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.IdentityModel.Tokens;
+using System.ComponentModel;
+using System.IdentityModel.Tokens.Jwt;
+using System.Net.Mail;
+using System.Security.Claims;
 using UserApi.Services;
+using WebApiLib;
 using WebApiLib.Abstraction;
 using WebApiLib.DataStore.Entity;
+using WebApiLib.Rsa;
 
 
 
@@ -14,40 +20,67 @@ namespace UserApi.Controllers
     [Route("[controller]")]
     public class UserController : ControllerBase
     {
-        private readonly UserService _userService;
+        private readonly IUserService _userService;
+        private readonly Account _account;
+        private readonly IConfiguration _configuration;
 
-        public UserController(IUserService userService)
+        public UserController(IUserService userService, Account account, IConfiguration configuration)
         {
-            _userService = (UserService?)userService;
+            _userService = userService;
+            _account = account;
+            _configuration = configuration;
         }
 
         [AllowAnonymous]
         [HttpPost("login")]
-        public  IActionResult Login(string login, string password)
+        public  IActionResult Login([Description("User Auth")][FromBody] LoginModel model)
         {
-            var token = _userService.UserCheckRole(login, password);
-            if (!token.IsNullOrEmpty())
-                return Ok(token);
-
-            return NotFound("User not found");
+            if (ValidMail(model.Name))
+                return BadRequest($"Email:{model.Name} - should be Email");
+            if(_account.GetToken() is not null)
+                return BadRequest("already logged in");
+            if (!_userService.Authentification(model))
+                return NotFound();
+            _account.Login(model);
+            _account.RefreshToken(GenerateToken(_account));
+            return Ok(_account.GetToken());
         }
 
-        [HttpPost("register")]
-        public ActionResult<Guid> Login([FromBody] LoginModel model)
+        [Authorize(Roles = "Admin")]
+        [HttpPost("addUser")]
+        public ActionResult AddUser([FromBody] LoginModel model)
         {
+            
+            if (ValidMail(model.Name) == false)
+                return BadRequest($"Email:{model.Name} - should be Email");
             var userId = _userService.UserAdd(model);
-
-            if(userId.Equals(default))
+            if (userId.Equals(default))
             {
                 return BadRequest("User already exists");
             }
-            return userId;
+            return Ok(userId);
         }
 
-        [HttpPost("list")]
-        public IActionResult<> GetUsersList([FromBody] LoginModel model)
+        [AllowAnonymous]
+        [HttpPost("addAdmin")]
+        public ActionResult AddAdmin([FromBody] LoginModel model)
         {
-            var usersList = _userService.GetList();
+            if (ValidMail(model.Name) == false)
+                return BadRequest($"Email:{model.Name} - should be Email");
+            var userId = _userService.AddAdmin(model);
+
+            if (userId.Equals(default))
+            {
+                return BadRequest("User already exists");
+            }
+            return Ok(userId);
+        }
+
+        [Authorize(Roles = "Admin")]
+        [HttpPost("usersList")]
+        public IActionResult GetUsers()
+        {
+            var usersList = _userService.GetUsers();
 
             if(usersList.Count == 0)
             {
@@ -56,9 +89,10 @@ namespace UserApi.Controllers
             return Ok(usersList);
         }
 
+        [Authorize(Roles = "Admin")]
         [HttpDelete("delete/(userToDeleteName)")]
         public IActionResult DeleteUser(string userToDeleteName, [FromBody] LoginModel model){
-            bool isDeleted = _userService.Delete(model.UserName, model.Password, userToDeleteName);
+            bool isDeleted = _userService.Delete(model.Name, model.Password, userToDeleteName);
 
             if (!isDeleted)
             {
@@ -67,5 +101,45 @@ namespace UserApi.Controllers
             return Ok("User deleted");
         }
 
+        [HttpPost("logout")]
+        public ActionResult LogOut()
+        {
+            _account.Logout();
+            return Ok();
+        }
+
+        private string GenerateToken(Account account)
+        {
+            var key = new RsaSecurityKey(RsaService.GetPrivateKey());
+            var credentials = new SigningCredentials(key, SecurityAlgorithms.RsaSha256Signature);
+            var claim = new[]
+            {
+                new Claim(ClaimTypes.Name, account.UserName),
+                new Claim(ClaimTypes.Role, account.Role.ToString()),
+                new Claim("Id", account.Id.ToString())
+            };
+
+            var token = new JwtSecurityToken(
+                _configuration["Jwt:Issuer"],
+                _configuration["Jwt:Audience"],
+                claim,
+                expires: DateTime.Now.AddMinutes(10),
+                signingCredentials: credentials);
+            return new JwtSecurityTokenHandler().WriteToken(token);
+        }
+
+        private bool ValidMail(string name)
+        {
+            try
+            {
+                MailAddress mail = new MailAddress(name);
+                return true;
             }
+            catch(FormatException) 
+            {
+                return false;
+            }
+        }
+
+    }
 }

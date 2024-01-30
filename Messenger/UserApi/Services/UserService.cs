@@ -149,9 +149,29 @@ public class UserService : IUserService
         using (_context)
         {
             users.AddRange(_context.Users.Include(x=> x.RoleType)
-                .Select(x=> _mapper.Map<UserModel>(x).List()));
+                .Select(x=> _mapper.Map<UserModel>(x)).ToList());
             return users;
         }
+    }
+
+    public UserEntity GetUser(Guid? userId, string? email)
+    {
+        var user = new UserEntity();
+        using (_context)
+        {
+            var query = _context.Users.Include(x => x.RoleType).AsQueryable();
+            if (!string.IsNullOrEmpty(email))
+                query = query.Where(x => x.UserName == email);
+            if (userId.HasValue)
+                query = query.Where(x => x.Id == userId);
+
+            user = query.FirstOrDefault();
+        }
+        if (user == null)
+            return null;
+        if (_account.Role == UserRole.Admin || _account.Id == userId)
+            return user;
+        return null;
     }
 
     private bool PasswordValidation(string password1, string password2)

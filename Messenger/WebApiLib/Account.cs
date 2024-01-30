@@ -27,7 +27,7 @@ namespace WebApiLib
             Role = model.Role;
         }
 
-        public void Logout (UserModel model) 
+        public void Logout () 
         {
             Id = null;
             UserName = null;

@@ -12,6 +12,7 @@ public partial class UserProfile : Profile
         CreateMap<UserEntity, UserModel>().ConvertUsing(new EntityToModelConverter());
         CreateMap<UserEntity, Account>(MemberList.Destination);
         CreateMap<LoginModel, UserEntity>().ConvertUsing(new RegisterEntityConverter());
+        CreateMap<LoginModel, Account>();
     }
 
 }
