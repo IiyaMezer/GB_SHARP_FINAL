@@ -23,7 +23,7 @@ namespace UserApi.Controllers
 
         [AllowAnonymous]
         [HttpPost("login")]
-        public IActionResult Login(string login, string password)
+        public  IActionResult Login(string login, string password)
         {
             var token = _userService.UserCheckRole(login, password);
             if (!token.IsNullOrEmpty())
@@ -33,9 +33,9 @@ namespace UserApi.Controllers
         }
 
         [HttpPost("register")]
-        public IActionResult Login([FromBody] LoginModel model)
+        public ActionResult<Guid> Login([FromBody] LoginModel model)
         {
-            var userId = _userService.Add(model.Name, model.Password);
+            var userId = _userService.UserAdd(model);
 
             if(userId.Equals(default))
             {
