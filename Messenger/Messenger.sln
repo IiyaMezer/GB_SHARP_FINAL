@@ -3,16 +3,20 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.8.34408.163
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UserApi", "UserApi\UserApi.csproj", "{9EB5FBE1-9262-404D-80B2-A1AD68312F5E}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "UserApi", "UserApi\UserApi.csproj", "{9EB5FBE1-9262-404D-80B2-A1AD68312F5E}"
 	ProjectSection(ProjectDependencies) = postProject
 		{8F2510AD-3B28-41A5-8036-0B050FFD519E} = {8F2510AD-3B28-41A5-8036-0B050FFD519E}
 	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MessagesApi", "MessagesApi\MessagesApi.csproj", "{E68DD072-C9C0-49ED-AD83-84B53678AF37}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MessagesApi", "MessagesApi\MessagesApi.csproj", "{E68DD072-C9C0-49ED-AD83-84B53678AF37}"
+	ProjectSection(ProjectDependencies) = postProject
+		{8F2510AD-3B28-41A5-8036-0B050FFD519E} = {8F2510AD-3B28-41A5-8036-0B050FFD519E}
+		{FC4CC07C-5DC4-42A2-9F94-EC14EB4F32A7} = {FC4CC07C-5DC4-42A2-9F94-EC14EB4F32A7}
+	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WebApiLib", "WebApiLib\WebApiLib.csproj", "{8F2510AD-3B28-41A5-8036-0B050FFD519E}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WebApiLib", "WebApiLib\WebApiLib.csproj", "{8F2510AD-3B28-41A5-8036-0B050FFD519E}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "KeyGen", "KeyGen\KeyGen.csproj", "{FC4CC07C-5DC4-42A2-9F94-EC14EB4F32A7}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "KeyGen", "KeyGen\KeyGen.csproj", "{FC4CC07C-5DC4-42A2-9F94-EC14EB4F32A7}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
