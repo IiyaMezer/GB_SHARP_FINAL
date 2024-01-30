@@ -7,6 +7,7 @@ using System.Text;
 using WebApiLib;
 using WebApiLib.Abstraction;
 using WebApiLib.DataStore.Entity;
+using WebApiLib.Responce;
 
 namespace UserApi.Services;
 
@@ -119,7 +120,7 @@ public class UserService : IUserService
             return true;
         }
     }
-    public bool Authentification(LoginModel model)
+    public UserResponce Authentification(LoginModel model)
     {
         UserEntity user = null;
         using (_context)
@@ -128,14 +129,16 @@ public class UserService : IUserService
                 .FirstOrDefault(x => x.UserName == model.Name);
             if (user is null)
             {
-                return false;
+                return UserResponce.UserNotFound();
             }
             if (PasswordValidation(model.Password, user.Password)) 
             {
-                return true;
+                var responce = UserResponce.Ok();
+                responce.Users.Add(_mapper.Map<UserModel>(user));
+                return responce;
             }
 
-            return false;
+            return UserResponce.WrongPassword();
         }
     }
 

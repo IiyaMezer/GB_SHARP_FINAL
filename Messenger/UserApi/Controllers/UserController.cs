@@ -37,11 +37,16 @@ namespace UserApi.Controllers
         {
             if (ValidMail(model.Name))
                 return BadRequest($"Email:{model.Name} - should be Email");
+
             if(_account.GetToken() is not null)
                 return BadRequest("already logged in");
-            if (!_userService.Authentification(model))
+
+            var responce = _userService.Authentification(model);
+
+            if (!responce.IsSuccess)
                 return NotFound();
-            _account.Login(model);
+
+            _account.Login(responce.Users[0]);
             _account.RefreshToken(GenerateToken(_account));
             return Ok(_account.GetToken());
         }
