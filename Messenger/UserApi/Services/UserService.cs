@@ -7,118 +7,151 @@ using WebApiLib.DataStore.Entity;
 
 namespace UserApi.Services;
 
-    public class UserService : IUserService
+public class UserService : IUserService
+{
+    public readonly AppDbContext _context;
+    private readonly IConfiguration _config;
+    private readonly Acc;
+
+    public UserService(AppDbContext context)
     {
-        public readonly AppDbContext _context;
-        private readonly IConfiguration _config;
+        _context = context;
+    }
 
-        public UserService(AppDbContext context)
+    public Guid Add(LoginModel model)
+    {
+        var users = new List<UserEntity>();
+
+        using (_context)
         {
-            _context = context;
-        }
-
-        public Guid Add(string name, string password)
-        {
-            var users = new List<UserEntity>();
-
-            using (_context)
+            var isFirstUser = !_context.Users.Any();
+            var userExist = _context.Users.Any(x => !x.UserName.ToLower().Equals(model.Name.ToLower()));
+            users = _context.Users.ToList();
+            UserEntity entity = null;
+            if (userExist)
             {
-                var isFirstUser = !_context.Users.Any();
-                var userExist = _context.Users.Any(x => !x.UserName.ToLower().Equals(name.ToLower()));
-                users = _context.Users.ToList();
-                UserEntity entity = null;
-                if (userExist)
-                {
-                    return default;
-
-                }
-                else
-                {
-                    UserRole role = isFirstUser ? UserRole.Admin : UserRole.User;
-                    entity = new UserEntity
-                    {
-                        Id = Guid.NewGuid(),
-                        UserName = name,
-                        Password = password,
-                        RoleType = role
-                    };
-
-                    _context.Add(entity);
-                    _context.SaveChanges();
-                    return entity.Id;
-                }
+                return default;
 
             }
-        }
-
-        public string UserCheckRole(string name, string password)
-        {
-            using (_context)
+            else
             {
-                var entity = _context.Users
-                    .FirstOrDefault(
-                    x => x.UserName.ToLower().Equals(name.ToLower()) &&
-                    x.Password.Equals(password));
-
-                if (entity == null)
-                    return "";
-
-                var user = new UserModel
+                UserRole role = isFirstUser ? UserRole.Admin : UserRole.User;
+                entity = new UserEntity
                 {
-                    UserName = entity.UserName,
-                    Password = entity.Password,
-                    Role = entity.RoleType
+                    Id = Guid.NewGuid(),
+                    UserName = model.Name,
+                    Password = model.Password,
+                    RoleType = role
                 };
 
-                return GenerateToken(user);
+                _context.Add(entity);
+                _context.SaveChanges();
+                return entity.Id;
             }
         }
+    }
+    public Guid AddAdmin(LoginModel model)
+    {
+        var users = new List<UserEntity>();
 
-        public bool Delete(string adminName, string adminPassword, string userToDeleteName){
-            var admin = _context.Users.FirstOrDefault(x=>x.Name
-            .ToLower()
-            .Equals(adminName)
-            .ToLower()) &&
-            x.Password
-            .Equals(adminPassword);
-
-            if(admin ==null || admin.RoleType != UserRole.Admin){
-                return false;
-            } 
-
-            var userToDelete = _context.Users.FirstOrDefault(x=>x.Name
-            .ToLower().Equals(userToDeleteName).ToLower());
-
-            if (userToDelete == null || userToDelete.RoleType == UserRole.Admin)
-            {
-                return false;
-            }
-
-            _context.Users.Remove(userToDelete);
-            _context.SaveChanges();
-        }
-        
- 
-        
-
-        private string GenerateToken(UserModel user)
+        using (_context)
         {
-            var securityKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_config["Jwt:Key"]));
-            var credentials = new SigningCredentials(securityKey, SecurityAlgorithms.HmacSha256);
-            var claims = new[]
+            var userExist = _context.Users.Any(x => !x.UserName.ToLower().Equals(model.Name.ToLower()));
+            users = _context.Users.ToList();
+            UserEntity entity = null;
+            if (userExist)
             {
+                return default;
+
+            }
+            else
+            {
+                entity = new UserEntity
+                {
+                    Id = Guid.NewGuid(),
+                    UserName = model.Name,
+                    Password = model.Password,
+                    RoleType = UserRole.Admin
+                };
+
+                _context.Add(entity);
+                _context.SaveChanges();
+                return entity.Id;
+            }
+
+        }
+    }
+
+
+    public string UserCheckRole(string name, string password)
+    {
+        using (_context)
+        {
+            var entity = _context.Users
+                .FirstOrDefault(
+                x => x.UserName.ToLower().Equals(name.ToLower()) &&
+                x.Password.Equals(password));
+
+            if (entity == null)
+                return "";
+
+            var user = new UserModel
+            {
+                UserName = entity.UserName,
+                Password = entity.Password,
+                Role = entity.RoleType
+            };
+
+            return GenerateToken(user);
+        }
+    }
+    public bool Delete(string adminName, string adminPassword, string userToDeleteName)
+    {
+        var admin = _context.Users.FirstOrDefault(x => x.UserName
+        .ToLower()
+        .Equals(adminName).ToLower()) &&
+        x.Password
+        .Equals(adminPassword);
+
+        if (admin == null || admin.RoleType != UserRole.Admin)
+        {
+            return false;
+        }
+
+        var userToDelete = _context.Users.FirstOrDefault(x => x.Name
+        .ToLower().Equals(userToDeleteName).ToLower());
+
+        if (userToDelete == null || userToDelete.RoleType == UserRole.Admin)
+        {
+            return false;
+        }
+
+        _context.Users.Remove(userToDelete);
+        _context.SaveChanges();
+        return true;
+    }
+
+
+
+
+    private string GenerateToken(UserModel user)
+            {
+                var securityKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_config["Jwt:Key"]));
+                var credentials = new SigningCredentials(securityKey, SecurityAlgorithms.HmacSha256);
+                var claims = new[]
+                {
                 new Claim(ClaimTypes.NameIdentifier, user.UserName),
                 new Claim(ClaimTypes.Role, user.Role.ToString())
             };
-            var token = new JwtSecurityToken(_config["Jwt:Issuer"],
-                _config["Jwt:Audience"],
-                claims,
-                expires: DateTime.Now.AddMinutes(60),
-                signingCredentials: credentials);
+                var token = new JwtSecurityToken(_config["Jwt:Issuer"],
+                    _config["Jwt:Audience"],
+                    claims,
+                    expires: DateTime.Now.AddMinutes(60),
+                    signingCredentials: credentials);
 
-            return new JwtSecurityTokenHandler().WriteToken(token);
-        }
-        }
+                return new JwtSecurityTokenHandler().WriteToken(token);
+            }
+        } 
 
 
     

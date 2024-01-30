@@ -12,6 +12,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MessagesApi", "MessagesApi\
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WebApiLib", "WebApiLib\WebApiLib.csproj", "{8F2510AD-3B28-41A5-8036-0B050FFD519E}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "KeyGen", "KeyGen\KeyGen.csproj", "{FC4CC07C-5DC4-42A2-9F94-EC14EB4F32A7}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -30,6 +32,10 @@ Global
 		{8F2510AD-3B28-41A5-8036-0B050FFD519E}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{8F2510AD-3B28-41A5-8036-0B050FFD519E}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{8F2510AD-3B28-41A5-8036-0B050FFD519E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{FC4CC07C-5DC4-42A2-9F94-EC14EB4F32A7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FC4CC07C-5DC4-42A2-9F94-EC14EB4F32A7}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FC4CC07C-5DC4-42A2-9F94-EC14EB4F32A7}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FC4CC07C-5DC4-42A2-9F94-EC14EB4F32A7}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

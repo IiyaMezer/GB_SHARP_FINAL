@@ -32,16 +32,10 @@ namespace UserApi.Controllers
             return NotFound("User not found");
         }
 
-        [HttpGet]
-        public IActionResult Register()
-        {
-            return View();
-        }
-
         [HttpPost("register")]
-        public async IActionResult<Guid> ([FromBody] LoginModel model)
+        public IActionResult Login([FromBody] LoginModel model)
         {
-            var userId = _userService.UserAdd(model.Name, model.Password);
+            var userId = _userService.Add(model.Name, model.Password);
 
             if(userId.Equals(default))
             {
@@ -51,7 +45,7 @@ namespace UserApi.Controllers
         }
 
         [HttpPost("list")]
-        public IActionResult<List<UserEntity>> GetUsersList([FromBody] LoginModel model)
+        public IActionResult<> GetUsersList([FromBody] LoginModel model)
         {
             var usersList = _userService.GetList();
 
