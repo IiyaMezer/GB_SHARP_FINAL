@@ -11,6 +11,8 @@ namespace WebApiLib.DataStore.Entity
         public string UserName { get; set; }
         public string Password { get; set; }
         public virtual RoleEntity RoleType { get; set; }
+        public virtual List<MessageEntity> SendMessages { get; set; }
+        public virtual List<MessageEntity> ReceiveMessages { get; set; }
 
     }
 }

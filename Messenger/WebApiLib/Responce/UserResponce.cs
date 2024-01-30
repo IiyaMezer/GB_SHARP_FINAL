@@ -10,8 +10,8 @@ namespace WebApiLib.Responce
     public class UserResponce
     {
         public bool IsSuccess { get; set; }
-        public List<ErrorModel> Errors = new List<ErrorModel>();
-        public List<UserModel> Users = new List<UserModel>();
+        public List<ErrorModel> Errors = new();
+        public List<UserModel> Users = new();
 
         public static UserResponce Ok()
         {
@@ -26,8 +26,7 @@ namespace WebApiLib.Responce
             {
                 IsSuccess = false,
                 Errors = new List<ErrorModel> {
-                    new ErrorModel
-                    {
+                    new() {
                         Message = "User not found",
                         StatusCode = 404
                     }
@@ -41,8 +40,7 @@ namespace WebApiLib.Responce
             {
                 IsSuccess = false,
                 Errors = new List<ErrorModel> {
-                    new ErrorModel
-                    {
+                    new() {
                         Message = "Wrong password",
                     }
                 }

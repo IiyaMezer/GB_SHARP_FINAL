@@ -5,7 +5,7 @@ namespace WebApiLib.DataStore.Entity
 {
     public class AppDbContext : DbContext
     {
-        private static string _connectionstring;
+        private string _connectionstring;
         public AppDbContext()
         {
 

@@ -34,9 +34,9 @@ namespace UserApi
                     .InstancePerDependency();
             });
 
-            builder.Services.AddSwaggerGen(x =>
+            builder.Services.AddSwaggerGen(opt =>
             {
-                x.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
+                opt.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
                 {
                     In = ParameterLocation.Header,
                     Description = "Enter token",
@@ -45,7 +45,7 @@ namespace UserApi
                     BearerFormat = "Token",
                     Scheme = "bearer"
                 });
-                x.AddSecurityRequirement(new OpenApiSecurityRequirement
+                opt.AddSecurityRequirement(new OpenApiSecurityRequirement
                 {
                     {
                         new OpenApiSecurityScheme
@@ -56,7 +56,7 @@ namespace UserApi
                                 Id = "Bearer"
                             }
                         },
-                        new string[] { }
+                        Array.Empty<string>()
                     }
                 });
             });
@@ -85,7 +85,7 @@ namespace UserApi
             }
 
             app.UseHttpsRedirection();
-
+            app.UseAuthentication();
             app.UseAuthorization();
 
 

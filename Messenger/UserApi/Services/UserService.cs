@@ -177,7 +177,7 @@ public class UserService : IUserService
         return null;
     }
 
-    private bool PasswordValidation(string password1, string password2)
+    private static bool PasswordValidation(string password1, string password2)
     {
         return password1 ==password2;
     }

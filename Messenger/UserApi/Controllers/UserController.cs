@@ -133,11 +133,11 @@ namespace UserApi.Controllers
             return new JwtSecurityTokenHandler().WriteToken(token);
         }
 
-        private bool ValidMail(string name)
+        private static bool ValidMail(string name)
         {
             try
             {
-                MailAddress mail = new MailAddress(name);
+                MailAddress mail = new(name);
                 return true;
             }
             catch(FormatException) 
