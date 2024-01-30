@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Authorization;
+﻿using Azure;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.IdentityModel.Tokens;
 using System.ComponentModel;
@@ -56,8 +57,10 @@ namespace UserApi.Controllers
             
             if (ValidMail(model.Name) == false)
                 return BadRequest($"Email:{model.Name} - should be Email");
-            var userId = _userService.UserAdd(model);
-            return Ok(userId);
+
+            var responce = _userService.UserAdd(model);
+            
+            return Ok(responce.UserId);
         }
 
         [AllowAnonymous]

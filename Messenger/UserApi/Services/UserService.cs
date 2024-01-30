@@ -27,7 +27,7 @@ public class UserService : IUserService
     public UserResponce UserAdd(LoginModel model)
     {
         var users = new List<UserEntity>();
-        var responce = UserResponce.OK();
+        var responce = UserResponce.Ok();
         using (var context = _context())
         {
             
