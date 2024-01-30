@@ -73,14 +73,32 @@ namespace UserApi.Services
                 return GenerateToken(user);
             }
         }
-                public IList<UserEntity> GetList()
-        {
-            var usersList = _context.Users.ToList();
-            if (usersList.Count ==0)
-            {
-                return new List<UserEntity>();
+
+        public bool Delete(string adminName, string adminPassword, string userToDeleteName){
+            var admin = _context.Users.FirstOrDefault(x=>x.Name
+            .ToLower()
+            .Equals(adminName)
+            .ToLower()) &&
+            x.Password
+            .Equals(adminPassword);
+
+            if(admin ==null || admin.RoleType != UserRole.Admin){
+                return false;
             } 
-                return usersList;
+
+            var userToDelete = _context.Users.FirstOrDefault(x=>x.Name
+            .ToLower().Equals(userToDeleteName).ToLower());
+
+            if (userToDelete == null || userToDelete.RoleType == UserRole.Admin)
+            {
+                return false;
+            }
+
+            _context.Users.Remove(userToDelete);
+            _context.SaveChanges();
+        }
+        
+ 
         }
 
         private string GenerateToken(UserModel user)
