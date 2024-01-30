@@ -62,5 +62,16 @@ namespace UserApi.Controllers
             return Ok(usersList);
         }
 
+        [HttpDelete("delete/(userToDeleteName)")]
+        public IActionResult DeleteUser(string userToDeleteName, [FromBody] LoginModel model){
+            bool isDeleted = _userService.Delete(model.UserName, model.Password, userToDeleteName);
+
+            if (!isDeleted)
+            {
+                return BadRequest("User not found, cannot be deleted, or insufficient permissions");
+            }
+            return Ok("User deleted");
+        }
+
             }
 }
