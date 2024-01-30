@@ -1,0 +1,223 @@
+{
+	"info": {
+		"_postman_id": "578d3b79-7cf9-48f3-b23c-c1b35e46c0b7",
+		"name": "New Collection",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "32659963"
+	},
+	"item": [
+		{
+			"name": "Login",
+			"protocolProfileBehavior": {
+				"followOriginalHttpMethod": true
+			},
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiJ9.eyJSb2xlIjoiQWRtaW4iLCJJc3N1ZXIiOiJJc3N1ZXIiLCJVc2VybmFtZSI6IkphdmFJblVzZSIsImV4cCI6MTcwNjYyOTYwNSwiaWF0IjoxNzA2NjI5NjA1fQ.TvUn4yiankstWMU5YRjkg_aLIuyIti8a9eZAGsEsggI",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"name\": \"ilya@mail.ru\",\r\n  \"password\": \"12345\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://localhost:7259/User/login",
+					"protocol": "https",
+					"host": [
+						"localhost"
+					],
+					"port": "7259",
+					"path": [
+						"User",
+						"login"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "addUser",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJodHRwOi8vd3d3LnczLm9yZy8yMDAxLzA0L3htbGRzaWctbW9yZSNyc2Etc2hhMjU2IiwidHlwIjoiSldUIn0.eyJodHRwOi8vc2NoZW1hcy54bWxzb2FwLm9yZy93cy8yMDA1LzA1L2lkZW50aXR5L2NsYWltcy9uYW1lIjoiaWx5YUBtYWlsLnJ1IiwiaHR0cDovL3NjaGVtYXMubWljcm9zb2Z0LmNvbS93cy8yMDA4LzA2L2lkZW50aXR5L2NsYWltcy9yb2xlIjoiQWRtaW4iLCJJZCI6ImE2MjhhOGM3LThlYzctNGNmNC04MWY0LTcxNTEyMjMxM2E2OSIsImV4cCI6MTcwNjY0NDg2MSwiaXNzIjoiaHR0cHM6Ly9sb2NhbGhvc3Q6NzAxMyIsImF1ZCI6Imh0dHBzOi8vbG9jYWxob3N0OjcwMTMifQ.LR5TUIsYBBgotrDIqfH-oEGfYf_iU9-JljhEolJ1efSfk6vpvT4STfzvbrB39XGlwoBz8g9foFpTk6bv_ieVR_DNiNUB35A_RXQAw0YLe7xcnoX1Y0He4DefPfPgB32L8PXy33zyv4fAUV2umFDTNszXuqsR34gU1O29IgtzDryxxLfBRP2Nv73a9u1XfYNQ7dPdAV0Tv8JqulqyEWL_mFc4PxW2qxzsNjh1P4o1V_ogdAcF2Lmxk8l3N6rKwwEXb3AeEu4pbtuQWR97h9ikdXdUJ7l2jMoDoB0LdCniYaLeFzb2Cha3z7s_5rbxo4rPaqDpyvSoKDP168LGUiazcQ",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"name\": \"124eeee56543@2568562.com\",\r\n  \"password\": \"123456\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://localhost:7259/User/addUser",
+					"protocol": "https",
+					"host": [
+						"localhost"
+					],
+					"port": "7259",
+					"path": [
+						"User",
+						"addUser"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "addAdmin",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiJ9.eyJSb2xlIjoiQWRtaW4iLCJJc3N1ZXIiOiJJc3N1ZXIiLCJVc2VybmFtZSI6IkphdmFJblVzZSIsImV4cCI6MTcwNjYyOTYwNSwiaWF0IjoxNzA2NjI5NjA1fQ.TvUn4yiankstWMU5YRjkg_aLIuyIti8a9eZAGsEsggI",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"name\": \"ilya@mail.ru\",\r\n  \"password\": \"12345\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://localhost:7259/User/addAdmin",
+					"protocol": "https",
+					"host": [
+						"localhost"
+					],
+					"port": "7259",
+					"path": [
+						"User",
+						"addAdmin"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "deleteUser",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiJ9.eyJSb2xlIjoiQWRtaW4iLCJJc3N1ZXIiOiJJc3N1ZXIiLCJVc2VybmFtZSI6IkphdmFJblVzZSIsImV4cCI6MTcwNjYyOTYwNSwiaWF0IjoxNzA2NjI5NjA1fQ.TvUn4yiankstWMU5YRjkg_aLIuyIti8a9eZAGsEsggI",
+							"type": "string"
+						}
+					]
+				},
+				"method": "DELETE",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"name\": \"string\",\r\n  \"password\": \"string\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://localhost:7259/User/delete/(userToDeleteName)",
+					"protocol": "https",
+					"host": [
+						"localhost"
+					],
+					"port": "7259",
+					"path": [
+						"User",
+						"delete",
+						"(userToDeleteName)"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "logout",
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "POST",
+				"header": [],
+				"url": {
+					"raw": "https://localhost:7259/User/logout",
+					"protocol": "https",
+					"host": [
+						"localhost"
+					],
+					"port": "7259",
+					"path": [
+						"User",
+						"logout"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "usersList",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJodHRwOi8vd3d3LnczLm9yZy8yMDAxLzA0L3htbGRzaWctbW9yZSNyc2Etc2hhMjU2IiwidHlwIjoiSldUIn0.eyJodHRwOi8vc2NoZW1hcy54bWxzb2FwLm9yZy93cy8yMDA1LzA1L2lkZW50aXR5L2NsYWltcy9uYW1lIjoiaWx5YUBtYWlsLnJ1IiwiaHR0cDovL3NjaGVtYXMubWljcm9zb2Z0LmNvbS93cy8yMDA4LzA2L2lkZW50aXR5L2NsYWltcy9yb2xlIjoiQWRtaW4iLCJJZCI6ImE2MjhhOGM3LThlYzctNGNmNC04MWY0LTcxNTEyMjMxM2E2OSIsImV4cCI6MTcwNjY0NjUwMywiaXNzIjoiaHR0cHM6Ly9sb2NhbGhvc3Q6NzAxMyIsImF1ZCI6Imh0dHBzOi8vbG9jYWxob3N0OjcwMTMifQ.eKa4vrf2rUaBEoI5l4K5PUcnA1AK4otJQPg8sO5j0Q-TFbJlo2MDrSSGgqlneVd1rndMGJWh8nz_WsyR1ed3iUm1aUjdc-OjUdkym3uysFD7rgSAtjKZR4Dn4nSAeMfzdG_gCjWc9sCVWPTa41t8cZVL7SIBTYkwEgBXLZ2eAbAj_CYI_d3i_QRQ3aT5va5Jui9Z0CGR8BirXQ8sZ87iS1wV57A1CDfL8Dk3tagxoH4VwC4J6Pjxh3pzwICEMiMxiCwnV0HgcgJT9x9VG-0k-Y7m6MU4emNPeJHzjdV-u1XlFWB_yx0ByvYetiYW2q_tOUqQ8NZOopRnAGV64hxo1w",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"url": {
+					"raw": "https://localhost:7259/User/usersList",
+					"protocol": "https",
+					"host": [
+						"localhost"
+					],
+					"port": "7259",
+					"path": [
+						"User",
+						"usersList"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
