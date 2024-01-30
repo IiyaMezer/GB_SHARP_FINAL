@@ -9,6 +9,7 @@ using Microsoft.OpenApi.Models;
 using WebApiLib.Abstraction;
 using WebApiLib.DataStore.Entity;
 using WebApiLib.Rsa;
+using WebApiLib;
 
 namespace MessagesApi
 {

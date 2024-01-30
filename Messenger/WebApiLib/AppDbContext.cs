@@ -1,8 +1,10 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Hosting;
+using WebApiLib.DataStore.Entity;
 
 
-namespace WebApiLib.DataStore.Entity
+namespace WebApiLib
 {
     public class AppDbContext : DbContext
     {
@@ -21,7 +23,12 @@ namespace WebApiLib.DataStore.Entity
         public DbSet<RoleEntity> Roles { get; set; }
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            optionsBuilder.UseNpgsql(_connectionstring);
+            var config = new ConfigurationBuilder().
+                   SetBasePath(Directory.GetCurrentDirectory()).
+                   AddJsonFile("appsettings.json").
+                   Build();
+            string connectionString = config.GetConnectionString("DefaultConnection");
+            optionsBuilder.UseNpgsql(connectionString);
         }
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {

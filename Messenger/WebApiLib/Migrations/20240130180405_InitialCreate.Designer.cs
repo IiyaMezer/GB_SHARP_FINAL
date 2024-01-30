@@ -5,14 +5,14 @@ using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
-using WebApiLib.DataStore.Entity;
+using WebApiLib;
 
 #nullable disable
 
 namespace WebApiLib.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20240130172433_InitialCreate")]
+    [Migration("20240130180405_InitialCreate")]
     partial class InitialCreate
     {
         /// <inheritdoc />
