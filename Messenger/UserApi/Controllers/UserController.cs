@@ -35,9 +35,7 @@ namespace UserApi.Controllers
         [HttpPost("login")]
         public  IActionResult Login([Description("User Auth")][FromBody] LoginModel model)
         {
-            if (ValidMail(model.Name))
-                return BadRequest($"Email:{model.Name} - should be Email");
-
+            
             if(_account.GetToken() is not null)
                 return BadRequest("already logged in");
 
@@ -137,7 +135,7 @@ namespace UserApi.Controllers
         {
             try
             {
-                MailAddress mail = new(name);
+                MailAddress mailAddress = new (name);
                 return true;
             }
             catch(FormatException) 

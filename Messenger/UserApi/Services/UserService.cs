@@ -13,11 +13,11 @@ namespace UserApi.Services;
 
 public class UserService : IUserService
 {
-    public readonly AppDbContext _context;
+    public readonly Func<AppDbContext> _context;
     private readonly Account _account;
     private readonly IMapper _mapper;
 
-    public UserService(AppDbContext context, Account account, IMapper mapper)
+    public UserService(Func<AppDbContext> context, Account account, IMapper mapper)
     {
         _context = context;
         _account = account;
@@ -28,11 +28,11 @@ public class UserService : IUserService
     {
         var users = new List<UserEntity>();
 
-        using (_context)
+        using (var context = _context())
         {
-            var isFirstUser = !_context.Users.Any();
-            var userExist = _context.Users.Any(x => !x.UserName.ToLower().Equals(model.Name.ToLower()));
-            users = _context.Users.ToList();
+            var isFirstUser = !context.Users.Any();
+            var userExist = context.Users.Any(x => !x.UserName.ToLower().Equals(model.Name.ToLower()));
+            users = context.Users.ToList();
             UserEntity entity = null;
             if (userExist)
             {
@@ -54,8 +54,8 @@ public class UserService : IUserService
                     RoleType = new RoleEntity { Role = UserRole.User}
                 };
 
-                _context.Add(entity);
-                _context.SaveChanges();
+                context.Add(entity);
+                context.SaveChanges();
                 return entity.Id;
             }
         }
@@ -64,10 +64,10 @@ public class UserService : IUserService
     {
         var users = new List<UserEntity>();
 
-        using (_context)
+        using (var context = _context())
         {
-            var userExist = _context.Users.Any(x => !x.UserName.ToLower().Equals(model.Name.ToLower()));
-            users = _context.Users.ToList();
+            var userExist = context.Users.Any(x => x.UserName.ToLower().Equals(model.Name.ToLower()));
+            users = context.Users.ToList();
             UserEntity entity = null;
             if (userExist)
             {
@@ -83,8 +83,8 @@ public class UserService : IUserService
                 };
                 
 
-                _context.Users.Add(entity);
-                _context.SaveChanges();
+                context.Users.Add(entity);
+                context.SaveChanges();
                 return entity.Id;
             }
 
@@ -97,9 +97,9 @@ public class UserService : IUserService
         {
             return false;
         }
-        using (_context)
+        using (var context = _context())
         {
-            var query = _context.Users.Include(x => x.RoleType).AsQueryable();
+            var query = context.Users.Include(x => x.RoleType).AsQueryable();
             if (!string.IsNullOrEmpty(userToDeleteName))
             {
                 query = query.Where(x => x.UserName == userToDeleteName);
@@ -115,17 +115,17 @@ public class UserService : IUserService
             {
                 return false;
             }
-            _context.Users.Remove(exist);
-            _context.SaveChanges();
+            context.Users.Remove(exist);
+            context.SaveChanges();
             return true;
         }
     }
     public UserResponce Authentification(LoginModel model)
     {
         UserEntity user = null;
-        using (_context)
+        using (var context = _context())
         {
-            user = _context.Users.Include(x => x.RoleType)
+            user = context.Users.Include(x => x.RoleType)
                 .FirstOrDefault(x => x.UserName == model.Name);
             if (user is null)
             {
@@ -149,9 +149,9 @@ public class UserService : IUserService
         {
             return null;
         }
-        using (_context)
+        using (var context = _context())
         {
-            users.AddRange(_context.Users.Include(x=> x.RoleType)
+            users.AddRange(context.Users.Include(x=> x.RoleType)
                 .Select(x=> _mapper.Map<UserModel>(x)).ToList());
             return users;
         }
@@ -160,9 +160,9 @@ public class UserService : IUserService
     public UserEntity GetUser(Guid? userId, string? email)
     {
         var user = new UserEntity();
-        using (_context)
+        using (var context = _context())
         {
-            var query = _context.Users.Include(x => x.RoleType).AsQueryable();
+            var query = context.Users.Include(x => x.RoleType).AsQueryable();
             if (!string.IsNullOrEmpty(email))
                 query = query.Where(x => x.UserName == email);
             if (userId.HasValue)
