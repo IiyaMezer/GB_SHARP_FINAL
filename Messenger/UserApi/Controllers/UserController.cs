@@ -57,10 +57,6 @@ namespace UserApi.Controllers
             if (ValidMail(model.Name) == false)
                 return BadRequest($"Email:{model.Name} - should be Email");
             var userId = _userService.UserAdd(model);
-            if (userId.Equals(default))
-            {
-                return BadRequest("User already exists");
-            }
             return Ok(userId);
         }
 

@@ -12,6 +12,7 @@ namespace WebApiLib.Responce
         public bool IsSuccess { get; set; }
         public List<ErrorModel> Errors = new();
         public List<UserModel> Users = new();
+        public Guid? UserId { get; set; }
 
         public static UserResponce Ok()
         {
@@ -42,6 +43,20 @@ namespace WebApiLib.Responce
                 Errors = new List<ErrorModel> {
                     new() {
                         Message = "Wrong password",
+                    }
+                }
+            };
+        }
+        public static UserResponce UserExist()
+        {
+            return new UserResponce
+            {
+                IsSuccess = false,
+                Errors = new List<ErrorModel> {
+                    new ErrorModel
+                    {
+                        Message = "User already exists",
+                        StatusCode = 409
                     }
                 }
             };
