@@ -38,7 +38,7 @@ namespace WebApiLib.DataStore.Entity
                 .HasMaxLength(255);
 
                 entity.HasOne(e => e.RoleType)
-                .WithMany(e => Users);
+                .WithMany(e => e.Users);
 
             });
 
