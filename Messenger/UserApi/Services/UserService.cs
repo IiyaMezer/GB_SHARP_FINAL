@@ -139,9 +139,26 @@ public class UserService : IUserService
         }
     }
 
+    public List<UserModel> GetUsers()
+    {
+        var users = new List<UserModel>();
+        if (!_account.Role.Equals(UserRole.Admin))
+        {
+            return null;
+        }
+        using (_context)
+        {
+            users.AddRange(_context.Users.Include(x=> x.RoleType)
+                .Select(x=> _mapper.Map<UserModel>(x).List()));
+            return users;
+        }
+    }
+
     private bool PasswordValidation(string password1, string password2)
     {
         return password1 ==password2;
     }
+
+
 }
 
