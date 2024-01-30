@@ -17,7 +17,7 @@ namespace UserApi.Services
             _context = context;
         }
 
-        public Guid UserAdd(string name, string password)
+        public Guid Add(string name, string password)
         {
             var users = new List<UserEntity>();
 
@@ -73,6 +73,15 @@ namespace UserApi.Services
                 return GenerateToken(user);
             }
         }
+                public IList<UserEntity> GetList()
+        {
+            var usersList = _context.Users.ToList();
+            if (usersList.Count ==0)
+            {
+                return new List<UserEntity>();
+            } 
+                return usersList;
+        }
 
         private string GenerateToken(UserModel user)
         {
@@ -91,5 +100,7 @@ namespace UserApi.Services
 
             return new JwtSecurityTokenHandler().WriteToken(token);
         }
+
+
     }
 }
