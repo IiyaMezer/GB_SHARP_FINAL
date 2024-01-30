@@ -5,8 +5,8 @@ using System.Text;
 using WebApiLib.Abstraction;
 using WebApiLib.DataStore.Entity;
 
-namespace UserApi.Services
-{
+namespace UserApi.Services;
+
     public class UserService : IUserService
     {
         public readonly AppDbContext _context;
@@ -99,7 +99,7 @@ namespace UserApi.Services
         }
         
  
-        }
+        
 
         private string GenerateToken(UserModel user)
         {
@@ -118,7 +118,8 @@ namespace UserApi.Services
 
             return new JwtSecurityTokenHandler().WriteToken(token);
         }
+        }
 
 
-    }
-}
+    
+
