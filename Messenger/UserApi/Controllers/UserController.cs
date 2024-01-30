@@ -32,8 +32,14 @@ namespace UserApi.Controllers
             return NotFound("User not found");
         }
 
+        [HttpGet]
+        public IActionResult Register()
+        {
+            return View();
+        }
+
         [HttpPost("register")]
-        public IActionResult<Guid> UserAdd([FromBody] LoginModel model)
+        public async IActionResult<Guid> ([FromBody] LoginModel model)
         {
             var userId = _userService.UserAdd(model.Name, model.Password);
 
