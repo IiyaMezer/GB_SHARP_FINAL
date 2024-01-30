@@ -118,7 +118,30 @@ public class UserService : IUserService
             _context.SaveChanges();
             return true;
         }
+    }
+    public bool Authentification(LoginModel model)
+    {
+        UserEntity user = null;
+        using (_context)
+        {
+            user = _context.Users.Include(x => x.RoleType)
+                .FirstOrDefault(x => x.UserName == model.Name);
+            if (user is null)
+            {
+                return false;
+            }
+            if (PasswordValidation(model.Password, user.Password)) 
+            {
+                return true;
+            }
 
-     } 
+            return false;
+        }
+    }
+
+    private bool PasswordValidation(string password1, string password2)
+    {
+        return password1 ==password2;
+    }
 }
 
